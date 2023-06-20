@@ -1,3 +1,4 @@
-Fecha,Concepto,Importe,Divisa
+Date,Abstract,Amount,Currency
 01/01/2023,"Sueldo",1000,EUR
 05/01/2023,"Comprar pan",-20,EUR
+05/01/2023,"Lotería niño",-20,EUR
