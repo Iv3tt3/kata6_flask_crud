@@ -15,9 +15,9 @@
                 </tr>
                 {%for movement in the_movements%}
                 <tr>
-                    <td>{{movement[0]}}</th>
-                    <td>{{movement[1]}}</th>
-                    <td>{{movement[2]}}{{movement[3]}}</th>
+                    <td>{{movement.Fecha}}</td>
+                    <td>{{movement.Concepto}}</td>
+                    <td>{{movement.Importe}}{{movement.Divisa}}</td>
                 </tr>
                 {% endfor %}
             </table>
