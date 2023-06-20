@@ -10,3 +10,9 @@ def index():
     movements = list(reader)
 
     return render_template("index.html", the_movements=movements) 
+
+@app.route("/new_movement")
+def new_mov():
+    return render_template("new_mov_form.html")
+
+

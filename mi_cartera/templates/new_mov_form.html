@@ -1,0 +1,34 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New movement</title>
+</head>
+<body>
+    <nav>
+        <a href="/">Back to All Movements</a>
+    </nav>
+    <main>
+        <h1> Add a movement </h1>
+        <form action="/new_movement" method="post"></form> <!-- Lo devuelvo a la misma ruta pero utilizo el metodo post (en el formulario fuerzo el metodo post, hasta ahora usabamos el metodo get. O sea la primera vez que pulsamos al boton anadir nuevo movimiento la primera peticion es con un GET y una vez rellenado el formulario la peticion es con un POST)-->
+        <div>
+            <label for="fecha">Date:</label> <!-- en el for poemos fecha (la id de abajo) para que sepa que esta etiqueta es del input correspondiente a la id fecha. Relaciona la label y el input. Etonces al lanzar el programa, cuando pulsas la etiqueta te selecciona el input -->
+            <input type="date" name="fecha" id="fecha"><br><br>
+        </div><div>
+            <label for="abstract">Name</label>
+            <input type="text" name="abstract" id="abstract"><br><br>
+        </div><div>
+            <label for="amount">Amount</label>
+            <input type="number" name="amount" id="amount" step="0.01"><br><br>
+        </div><div>
+            <label for="currency">Amount</label>
+            <select name="Currency" name="currency" id="currency">
+                <option value="EUR">Euros</option>
+                <option value="USD">Dólares</option>
+            </select><br><br>
+        </div><div>
+            <input type="submit" value="SUBMIT">
+        </div>
+    </main>
+</body>
+</html>
