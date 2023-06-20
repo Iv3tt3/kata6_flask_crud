@@ -1,4 +1,5 @@
 Date,Abstract,Amount,Currency
-01/01/2023,"Sueldo",1000,EUR
-05/01/2023,"Comprar pan",-20,EUR
-05/01/2023,"Lotería niño",-20,EUR
+2023-01-01,"Sueldo",1000,EUR
+2023-03-01,"Comprar pan",-20,EUR
+2023-05-04,"Lotería caña",-20,EUR
+2023-06-07,Comida del gato,10,EUR,SUBMIT
