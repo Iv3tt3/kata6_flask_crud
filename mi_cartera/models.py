@@ -24,17 +24,20 @@ class Movement:
 class MovementDAO:
     def __init__(self, file_path):
         self.path = file_path
+        self.all_movements = [] #Creamos la lista como atributo porque necesitamos utilizarla fuera
         if not os.path.exists(self.path):
-            #Si no existe el path debe crear el fichero
-            f = open(file_path, "w") #Creamos el fichero en escritura y escribimos la cabecera
+            f = open(file_path, "w") 
             f.write("date,abstract,amount,currency\n")
 
     def insert(self, movement):
-        f = open(self.path, "a", newline="")#El newline es para la gente de windows
+        f = open(self.path, "a", newline="")
         writer = csv.writer(f, delimiter=",", quotechar='"')
         writer.writerow([movement.date, movement.abstract, movement.amount, movement.currency])
 
     def all(self):
-        pass
-    #Devolver una lista de Movements con todos los registros, transformados en objeto Movements.
-        #Tiene que devolver todos los movimientos no como una cadena sino como una lista de movimientos, de movimientos de la clase Movement. Tiene que hacer: Abrir el fichero en modo lectura, leer todos los registros, quitando la cabecera. Y cada registro lo trannsformais en un movimiento, lo meteis en una lista y devolveis esa lista
+        f = open("movements.dat","r")
+        reader = csv.DictReader(f)
+        self.all_movements = [] #Vaciamos la lista, sino cada vez que hagamos el metodo all (al refrescar la pagina), va haciendo un append con los movimientos 
+        for row in reader:
+            mov = Movement(row['Date'],row['Abstract'],row['Amount'],row['Currency'])
+            self.all_movements.append(mov) #Nos crea una lista de objetos Movement

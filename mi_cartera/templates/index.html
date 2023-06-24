@@ -13,14 +13,14 @@
             <table>
                 <tr>
                     <th>Fecha</th>
-                    <th>Cocepto</th>
+                    <th>Concepto</th>
                     <th>Importe</th>
                 </tr>
-                {%for movement in the_movements%}
+                {%for movement in the_movements%} <!-- Ahora movement es un objeto Movement por lo que debemos usar los atributos-->
                 <tr>
-                    <td>{{movement.Date}}</td>
-                    <td>{{movement.Abstract}}</td>
-                    <td>{{movement.Amount}} {{movement.Currency}}</td>
+                    <td>{{movement.date}}</td> <!-- Ahora esto es un atributo del objeto Movement, no es la clave date de un diccionario. Idem con el resto (abstract, amount y currency)-->
+                    <td>{{movement.abstract}}</td>
+                    <td>{{movement.amount}} {{movement.currency}}</td>
                 </tr>
                 {% endfor %}
             </table>
