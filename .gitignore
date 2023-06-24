@@ -2,3 +2,5 @@
 evirtual/
 .env
 start_with_html/
+.vscode/
+data_mentira.dat

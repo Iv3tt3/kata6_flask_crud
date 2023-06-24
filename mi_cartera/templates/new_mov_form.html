@@ -10,10 +10,10 @@
     </nav>
     <main>
         <h1> Add a movement </h1>
-        <form action="/new_movement" method="post"><!-- Lo devuelvo a la misma ruta pero utilizo el metodo post (en el formulario fuerzo el metodo post, hasta ahora usabamos el metodo get. O sea la primera vez que pulsamos al boton anadir nuevo movimiento la primera peticion es con un GET y una vez rellenado el formulario la peticion es con un POST)-->
+        <form action="/new_movement" method="post">
         <div>
-            <label for="fecha">Date:</label> <!-- en el for poemos fecha (la id de abajo) para que sepa que esta etiqueta es del input correspondiente a la id fecha. Relaciona la label y el input. Etonces al lanzar el programa, cuando pulsas la etiqueta te selecciona el input -->
-            <input type="date" name="date" id="fecha"><br><br> <!-- es interesante usar los mismos nombres que las claves del fichero csv para luego poder añadir los datos -->
+            <label for="fecha">Date:</label> 
+            <input type="date" name="date" id="fecha"><br><br> 
         </div><div>
             <label for="abstract">Name</label>
             <input type="text" name="abstract" id="abstract"><br><br>
@@ -22,7 +22,7 @@
             <input type="number" name="amount" id="amount" step="0.01"><br><br>
         </div><div>
             <label for="currency">Amount</label>
-            <select name="Currency" name="currency" id="currency">
+            <select name="currency" name="currency" id="currency">
                 <option value="EUR">Euros</option>
                 <option value="USD">Dólares</option>
             </select><br><br>
