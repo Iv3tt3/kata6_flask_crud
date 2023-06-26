@@ -21,16 +21,28 @@ def test_change_atribute_date(): #Este test es para hacer el setter, quiero que 
     assert m.date == date(1970,4,8)
     
 def test_fail_if_amount_eq_zero():
-    pass
+    with pytest.raises(ValueError):
+        m = Movement("0002-01-31","Concepto",0, "EUR")
+
+def test_fail_is_amount_not_is_float():
+    with pytest.raises(ValueError):
+        m = Movement("0002-01-31","Concepto","1000,25", "EUR")
+    m = Movement("0002-01-31","Concepto","1100.25", "EUR")
+    assert m.amount == 1100.25
 
 def test_fail_if_amount_change_to_zero():
-    pass
+    m = Movement("0002-01-31","Concepto",1000, "EUR")
+    with pytest.raises(ValueError):
+        m.amount = 0
 
 def test_fail_if_curency_not_in_currencies():
-    pass
+    with pytest.raises(ValueError):
+        m = Movement("0002-01-31","Concepto",1000,"YEN")
 
 def test_fail_if_change_currency_not_in_currencies():
-    pass
+    m = Movement("0002-01-31","Concepto",1000,"EUR")
+    with pytest.raises(ValueError):
+        m.currency = "GPD"
 
 #Este test esta creado antes de hacer la clase MovementDAO
 def test_create_MovementDAO(): 
@@ -66,7 +78,7 @@ def test_insert_movement_MovementDAO():
     #Ahora ya podemos mirar si lo que leemos es lo que le hemos introducido
 
     assert list_reader[0] == ["date","abstract","amount","currency"]
-    assert list_reader[1] == ["0002-01-31","Concepto","1000","EUR"]
+    assert list_reader[1] == ["0002-01-31","Concepto","1000.0","EUR"]
 
 
 #En este test provamos si hacemos una intancia y se crea el fichero. Si luego insertamos un dato funciona. Pero si luego volvemos a crear una instancia en el nuevo fichero, elimina el movimiento porque lo sobrescribe. Queremos evitar eso, entonces aunque instancie otra vez sobre el mismo fichero lo que debe hacer es no sobreescribirlo si existe, y luego en el caso de que haga el metodo insert me añada una tercera linea con los datos.
@@ -87,5 +99,5 @@ def test_instance_dao_path_exists():
 
     assert len(list_reader) == 3
     assert list_reader[0] == ["date","abstract","amount","currency"]
-    assert list_reader[1] == ["0010-01-31","Primero","1000","EUR"]
-    assert list_reader[2] == ["0002-01-31","Segundo","1000","EUR"]
+    assert list_reader[1] == ["0010-01-31","Primero","1000.0","EUR"]
+    assert list_reader[2] == ["0002-01-31","Segundo","1000.0","EUR"]

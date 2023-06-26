@@ -2,10 +2,11 @@ from datetime import date
 import csv
 import os
 
-#Deberes hacer que amount sea solo numero y currency solo sea EUR y USD
+CURRENCIES = ("EUR","USD")
 
 class Movement:
     def __init__(self, input_date, abstract, amount, currency):
+        #input_date lo cambiamos porque entrava en conflicto con la libreria date
         self.date=input_date
         self.abstract=abstract
         self.amount=amount
@@ -20,6 +21,28 @@ class Movement:
         self._date = date.fromisoformat(value)
         if self._date > date.today():
             raise ValueError("Date must be today or lower")
+        
+    @property
+    def amount(self): 
+        return self._amount
+    
+    @amount.setter
+    def amount(self, value):
+        self._amount = float(value)
+        if self._amount == 0:
+            raise ValueError("Amount can't be 0")
+        
+    @property
+    def currency(self): 
+        return self._currency
+    
+    @currency.setter
+    def currency(self, value):
+        self._currency = value
+        if self._currency not in CURRENCIES:
+            raise ValueError(f"Currency must be in {CURRENCIES}")
+        
+
         
 class MovementDAO:
     def __init__(self, file_path):

@@ -10,19 +10,28 @@
     </nav>
     <main>
         <h1> Add a movement </h1>
+            {% with messages = get_flashed_messages() %} <!--Aqui llamas a la funcion flash que devuelve una lista:-->
+            {%if messages %} <!--Aqui dices que si hay mensajes los muestre:-->
+            <div>
+                {%for message in messages%}
+                    <p>{{message}}</p>
+                {%endfor%}
+            </div>
+            {%endif%} <!--Aqui cierras el if:-->
+            {%endwith%} <!--Aqui cierras el with:-->
         <form action="/new_movement" method="post">
         <div>
             <label for="fecha">Date:</label> 
-            <input type="date" name="date" id="fecha"><br><br> 
+            <input type="date" name="date" id="fecha" value="{{the_form.date}}"><br><br> <!--Aqui anadimos el value que es el valor predeterminado en el caso de que pete, el valor que habia introducido el usuario:-->
         </div><div>
             <label for="abstract">Name</label>
-            <input type="text" name="abstract" id="abstract"><br><br>
+            <input type="text" name="abstract" id="abstract" value="{{the_form.abstract}}"><br><br>
         </div><div>
             <label for="amount">Amount</label>
-            <input type="number" name="amount" id="amount" step="0.01"><br><br>
+            <input type="number" name="amount" id="amount" step="0.01" value="{{the_form.amount}}"><br><br>
         </div><div>
             <label for="currency">Amount</label>
-            <select name="currency" name="currency" id="currency">
+            <select name="currency" name="currency" id="currency" value="{{the_form.currency}}">
                 <option value="EUR">Euros</option>
                 <option value="USD">Dólares</option>
             </select><br><br>
