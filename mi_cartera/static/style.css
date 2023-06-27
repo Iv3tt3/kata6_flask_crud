@@ -1,0 +1,39 @@
+.msg-error p{
+    color: white;
+    font-weight:bold;
+    background-color: firebrick;
+    border: 1px solid black;
+    padding: 20pt;
+}
+h1{
+    color: white;
+    font-weight:bold;
+    background-color: rgb(49, 139, 217);
+    border-radius: 50% 0;
+    text-align: center;
+    padding: 5%;
+    margin-top: 20pt;
+}
+
+.button {
+    background-color: rgb(176, 176, 176);
+    font-weight: bold;
+    border-radius: 15pt;
+    color: white;
+    padding:10pt;
+    margin-left: 70%;
+}
+
+.button:hover { 
+    background-color: blue;
+  }
+
+header, footer{
+    background-color: rgb(49, 139, 217);
+}
+header p, footer p{
+    color:white;
+    font-weight: bold;
+    font-size: 1,2em;
+    padding: 10pt;
+}

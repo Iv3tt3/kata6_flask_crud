@@ -3,26 +3,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/pico.css">
+    <link rel="stylesheet" href="static/style.css">
     <title>Mi Cartera - {{ title }}</title> <!--Anadimos una variable y entonces se la pasamos cuando hacemos el render_template -->
 </head>
-    <style>
-        .msg-error p{
-            color: white;
-            font-weight:bold;
-            background-color: firebrick;
-            border: 1px solid black;
-            padding: 20pt;
-        }
-        h1{
-            color: white;
-            font-weight:bold;
-            background-color: rgb(49, 139, 217);
-            border-radius: 50% 0;
-            text-align: center;
-            padding: 5%;
-        }
-    </style>
 <body>
+    <header>
+        <p>Mi cartera</p>
+    </header>
+    <nav class="container" style="padding-top: 15pt;">
+        <ul>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/new_movement">New</a></li>
+        </ul>
+    </nav>
     {% with messages = get_flashed_messages() %} 
     {%if messages %} 
     <div class="msg-error container" style="padding-top: 15pt;">
@@ -32,14 +25,13 @@
     </div>
     {%endif%} 
     {%endwith%} 
-    
-    <nav class="container"style="padding-top: 15pt;">
-        <a href="/">Back to All Movements</a>
-        <a href="/new_movement">Add new movement</a>
-    </nav>
 
     <main class="container">
     {% block content %}{% endblock %}
     </main>
+    <footer>
+        <p>&copy; Iv3tt3</p>
+    </footer>
 </body>
+
 </html>
