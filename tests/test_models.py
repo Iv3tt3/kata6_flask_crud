@@ -120,3 +120,44 @@ def test_all_movements():
     assert dao.all_movements[1] == mv2
     assert dao.all_movements[2] == mv3
 
+def test_dao_get():
+    path = "data_mentira.dat"
+    if os.path.exists(path):
+        os.remove(path)
+    
+    dao = MovementDAO(path)
+    mv1 = Movement("0010-01-01","Primero",1000,"EUR")
+    dao.insert(mv1)
+    mv2 = Movement("0010-01-02","Segundo",1000,"EUR")
+    dao.insert(mv2)
+    mv3 = Movement("0010-01-03","Tercero",1000,"EUR")
+    dao.insert(mv3)
+
+    register = dao.get(1)
+    assert register == mv2
+
+def test_dao_get_outofindex():
+    path = "data_mentira.dat"
+    if os.path.exists(path):
+        os.remove(path)
+    
+    dao = MovementDAO(path)
+    mv1 = Movement("0010-01-01","Primero",1000,"EUR")
+    dao.insert(mv1)
+    mv2 = Movement("0010-01-02","Segundo",1000,"EUR")
+    dao.insert(mv2)
+    mv3 = Movement("0010-01-03","Tercero",1000,"EUR")
+    dao.insert(mv3)
+
+    with pytest.raises(IndexError):
+        register = dao.get(5)
+
+def test_dao_get_emptydatainfile():
+    path = "data_mentira.dat"
+    if os.path.exists(path):
+        os.remove(path)
+    
+    dao = MovementDAO(path)
+
+    with pytest.raises(IndexError):
+        register = dao.get(0)

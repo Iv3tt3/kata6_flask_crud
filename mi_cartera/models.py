@@ -77,4 +77,16 @@ class MovementDAO:
                 mov = Movement('0001-01-01',f"FORMAT ERROR {error}",0.001,"EUR")
                 self.all_movements.append(mov)
                 self.error.append(error)
+    
+    def get(self, id):
+        f = open(self.path,"r") #Esta linea estava mal
+        reader = csv.DictReader(f, delimiter=",", quotechar='"')
+        i = float("-inf")
+        for i, row in enumerate(reader):
+            if i == id:
+                break
 
+        if id > i:
+            raise IndexError("Movement don't exist")
+        mov = Movement(row['Date'],row['Abstract'],row['Amount'],row['Currency'])
+        return mov

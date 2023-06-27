@@ -27,4 +27,12 @@ def new_mov():
         except ValueError as error: #Capturamos el mensaje de error con una variable "error"
             flash(str(error)) 
             return render_template("new_mov_form.html", the_form=data, title = "Alta de movimientos") #Le ponemos la data introducida primero por el usuario
-        
+
+@app.route("/update_movement/<int:id>", methods=["GET","POST"])
+def upd_mov(id):
+    if request.method == "GET":
+        mov = dao.get(id)
+        return render_template("update.html", title="Update movement", 
+                               the_form=mov)
+    
+

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{%block content%}
+    <main>
+        <a class="button" href="/">Back to All Movements</a>=
+        <h1> Modificar movimiento </h1>
+        <form action="/new_movement" method="post">
+            <div>
+                <label for="fecha">Date:</label> 
+                <input type="date" name="date" id="fecha" value="{{the_form.date}}"><br><br> <!--Aqui anadimos el value que es el valor predeterminado en el caso de que pete, el valor que habia introducido el usuario:-->
+            </div><div>
+                <label for="abstract">Name</label>
+                <input type="text" name="abstract" id="abstract" value="{{the_form.abstract}}"><br><br>
+            </div><div>
+                <label for="amount">Amount</label>
+                <input type="number" name="amount" id="amount" step="0.01" value="{{the_form.amount}}"><br><br>
+            </div><div>
+                <label for="currency">Amount</label>
+                <select name="currency" name="currency" id="currency" value="{{the_form.currency}}">
+                    <option value="EUR">Euros</option>
+                    <option value="USD">Dólares</option>
+                </select><br><br>
+            </div><div>
+                <input name="sumbit" id="sumbit" type="submit" value="SUBMIT">
+            </div>
+        </form>
+    </main>
+{% endblock %}
