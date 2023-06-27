@@ -5,22 +5,41 @@
     <link rel="stylesheet" href="static/pico.css">
     <title>Mi Cartera - {{ title }}</title> <!--Anadimos una variable y entonces se la pasamos cuando hacemos el render_template -->
 </head>
+    <style>
+        .msg-error p{
+            color: white;
+            font-weight:bold;
+            background-color: firebrick;
+            border: 1px solid black;
+            padding: 20pt;
+        }
+        h1{
+            color: white;
+            font-weight:bold;
+            background-color: rgb(49, 139, 217);
+            border-radius: 50% 0;
+            text-align: center;
+            padding: 5%;
+        }
+    </style>
 <body>
-    <nav class="container"style="padding-top: 15pt;">
-        <a href="/">Back to All Movements</a>
-        <a href="/new_movement">Add new movement</a>
-    </nav>
     {% with messages = get_flashed_messages() %} 
     {%if messages %} 
-    <div class="container" style="padding-top: 15pt;">
+    <div class="msg-error container" style="padding-top: 15pt;">
         {%for message in messages%}
             <p>{{message}}</p>
         {%endfor%}
     </div>
     {%endif%} 
     {%endwith%} 
-       <main class="container">
-        {% block content %}{% endblock %}
+    
+    <nav class="container"style="padding-top: 15pt;">
+        <a href="/">Back to All Movements</a>
+        <a href="/new_movement">Add new movement</a>
+    </nav>
+
+    <main class="container">
+    {% block content %}{% endblock %}
     </main>
 </body>
 </html>

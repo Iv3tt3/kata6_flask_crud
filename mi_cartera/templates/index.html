@@ -13,7 +13,7 @@
             <tr>
                 <td>{{movement.date}}</td> <!-- Ahora esto es un atributo del objeto Movement, no es la clave date de un diccionario. Idem con el resto (abstract, amount y currency)-->
                 <td>{{movement.abstract}}</td>
-                <td>{{movement.amount}} {{movement.currency}}</td>
+                <td>{{ "%0.2f" | format(movement.amount | float) }} {{movement.currency}}</td>
             </tr>
             {% endfor %}
         </table>
