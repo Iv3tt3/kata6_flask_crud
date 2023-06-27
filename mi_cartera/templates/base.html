@@ -2,23 +2,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/pico.css">
     <title>Mi Cartera - {{ title }}</title> <!--Anadimos una variable y entonces se la pasamos cuando hacemos el render_template -->
 </head>
 <body>
-    <nav>
+    <nav class="container"style="padding-top: 15pt;">
         <a href="/">Back to All Movements</a>
         <a href="/new_movement">Add new movement</a>
     </nav>
     {% with messages = get_flashed_messages() %} 
     {%if messages %} 
-    <div>
+    <div class="container" style="padding-top: 15pt;">
         {%for message in messages%}
             <p>{{message}}</p>
         {%endfor%}
     </div>
     {%endif%} 
     {%endwith%} 
-       <main>
+       <main class="container">
         {% block content %}{% endblock %}
     </main>
 </body>

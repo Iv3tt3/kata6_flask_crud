@@ -67,7 +67,8 @@ class MovementDAO:
     def all(self):
         f = open(self.path,"r") #Esta linea estava mal
         reader = csv.DictReader(f)
-        self.all_movements = [] #Vaciamos la lista, sino cada vez que hagamos el metodo all (al refrescar la pagina), va haciendo un append con los movimientos 
+        self.all_movements = [] #Vaciamos las listas, sino cada vez que hagamos el metodo all (al refrescar la pagina), va haciendo un append
+        self.error = []
         for row in reader:
             try:
                 mov = Movement(row['Date'],row['Abstract'],row['Amount'],row['Currency'])
