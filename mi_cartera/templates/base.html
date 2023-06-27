@@ -1,0 +1,25 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Cartera - {{ title }}</title> <!--Anadimos una variable y entonces se la pasamos cuando hacemos el render_template -->
+</head>
+<body>
+    <nav>
+        <a href="/">Back to All Movements</a>
+        <a href="/new_movement">Add new movement</a>
+    </nav>
+    {% with messages = get_flashed_messages() %} 
+    {%if messages %} 
+    <div>
+        {%for message in messages%}
+            <p>{{message}}</p>
+        {%endfor%}
+    </div>
+    {%endif%} 
+    {%endwith%} 
+       <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

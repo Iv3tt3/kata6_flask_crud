@@ -1,38 +1,21 @@
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mi Cartera</title>
-    </head>
-    <body>
-        <nav>
-            <a href="/new_movement">Add new movement</a>
-        </nav>
-        {% with messages = get_flashed_messages() %} <!--Aqui llamas a la funcion flash que devuelve una lista:-->
-        {%if messages %} <!--Aqui dices que si hay mensajes los muestre:-->
-        <div>
-            {%for message in messages%}
-                <p>{{message}}</p>
-            {%endfor%}
-        </div>
-        {%endif%} <!--Aqui cierras el if:-->
-        {%endwith%} <!--Aqui cierras el with:-->
-        <main>
-            <h1>Mis movimientos</h1>
-            <table>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Concepto</th>
-                    <th>Importe</th>
-                </tr>
-                {%for movement in the_movements%} <!-- Ahora movement es un objeto Movement por lo que debemos usar los atributos-->
-                <tr>
-                    <td>{{movement.date}}</td> <!-- Ahora esto es un atributo del objeto Movement, no es la clave date de un diccionario. Idem con el resto (abstract, amount y currency)-->
-                    <td>{{movement.abstract}}</td>
-                    <td>{{movement.amount}} {{movement.currency}}</td>
-                </tr>
-                {% endfor %}
-            </table>
-        </main>
-    </body>
-</html>
+{% extends "base.html" %} <!-- Esto quiere decir que heredo de base.html-->
+
+{% block content%}
+    <main>
+        <h1>Mis movimientos</h1>
+        <table>
+            <tr>
+                <th>Fecha</th>
+                <th>Concepto</th>
+                <th>Importe</th>
+            </tr>
+            {%for movement in the_movements%} <!-- Ahora movement es un objeto Movement por lo que debemos usar los atributos-->
+            <tr>
+                <td>{{movement.date}}</td> <!-- Ahora esto es un atributo del objeto Movement, no es la clave date de un diccionario. Idem con el resto (abstract, amount y currency)-->
+                <td>{{movement.abstract}}</td>
+                <td>{{movement.amount}} {{movement.currency}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </main>
+{% endblock %}
