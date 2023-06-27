@@ -56,7 +56,7 @@ def test_create_MovementDAO():
     cabecera = f.readline() # Y aqui leo la cabecera con el readline()
 
     #Y ahora creo el test, ya que la cabecera tiene que ser esto:
-    assert cabecera == "date,abstract,amount,currency\n"
+    assert cabecera == "Date,Abstract,Amount,Currency\n"
 
     #Este test me testea MovementDAO e instancia la clase, por lo tanto me crea un data_mentira.dat en el la carpeta principal. Si quisiera ponerlo en una carpeta concreta se tendria que indicar en la linea 35.
 
@@ -77,7 +77,7 @@ def test_insert_movement_MovementDAO():
 
     #Ahora ya podemos mirar si lo que leemos es lo que le hemos introducido
 
-    assert list_reader[0] == ["date","abstract","amount","currency"]
+    assert list_reader[0] == ["Date","Abstract","Amount","Currency"]
     assert list_reader[1] == ["0002-01-31","Concepto","1000.0","EUR"]
 
 
@@ -98,6 +98,25 @@ def test_instance_dao_path_exists():
     list_reader = list(reader)
 
     assert len(list_reader) == 3
-    assert list_reader[0] == ["date","abstract","amount","currency"]
+    assert list_reader[0] == ["Date","Abstract","Amount","Currency"]
     assert list_reader[1] == ["0010-01-31","Primero","1000.0","EUR"]
     assert list_reader[2] == ["0002-01-31","Segundo","1000.0","EUR"]
+
+def test_all_movements():
+    path = "data_mentira.dat"
+    if os.path.exists(path):
+        os.remove(path)
+    
+    dao = MovementDAO(path)
+    mv1 = Movement("0010-01-01","Primero",1000,"EUR")
+    dao.insert(mv1)
+    mv2 = Movement("0010-01-02","Segundo",1000,"EUR")
+    dao.insert(mv2)
+    mv3 = Movement("0010-01-03","Tercero",1000,"EUR")
+    dao.insert(mv3)
+
+    dao.all()
+    assert dao.all_movements[0] == mv1
+    assert dao.all_movements[1] == mv2
+    assert dao.all_movements[2] == mv3
+

@@ -42,15 +42,21 @@ class Movement:
         if self._currency not in CURRENCIES:
             raise ValueError(f"Currency must be in {CURRENCIES}")
         
+    def __eq__ (self, other):
+        return self.date == other.date and self.abstract == other.abstract and self.amount == other.amount and self.currency == other.currency
+    #Anadimos el metodo magico de equal porque sino el test_all_movements peta ya que compara dos objetos diferentes y no pasa el test
 
-        
+    def __repr__(self):
+        return '{} {} {} {}'.format(self.date, self.abstract,  self.amount, self.currency)
+    #Anadimos el metodo magico repr porque el test falla y asi vemos lo que nos esta comparando
+
 class MovementDAO:
     def __init__(self, file_path):
         self.path = file_path
         self.all_movements = [] #Creamos la lista como atributo porque necesitamos utilizarla fuera
         if not os.path.exists(self.path):
             f = open(file_path, "w") 
-            f.write("date,abstract,amount,currency\n")
+            f.write("Date,Abstract,Amount,Currency\n") #Esta linea estava mal
 
     def insert(self, movement):
         f = open(self.path, "a", newline="")
@@ -58,7 +64,7 @@ class MovementDAO:
         writer.writerow([movement.date, movement.abstract, movement.amount, movement.currency])
 
     def all(self):
-        f = open("movements.dat","r")
+        f = open(self.path,"r") #Esta linea estava mal
         reader = csv.DictReader(f)
         self.all_movements = [] #Vaciamos la lista, sino cada vez que hagamos el metodo all (al refrescar la pagina), va haciendo un append con los movimientos 
         for row in reader:
