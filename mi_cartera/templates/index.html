@@ -8,6 +8,15 @@
         <nav>
             <a href="/new_movement">Add new movement</a>
         </nav>
+        {% with messages = get_flashed_messages() %} <!--Aqui llamas a la funcion flash que devuelve una lista:-->
+        {%if messages %} <!--Aqui dices que si hay mensajes los muestre:-->
+        <div>
+            {%for message in messages%}
+                <p>{{message}}</p>
+            {%endfor%}
+        </div>
+        {%endif%} <!--Aqui cierras el if:-->
+        {%endwith%} <!--Aqui cierras el with:-->
         <main>
             <h1>Mis movimientos</h1>
             <table>

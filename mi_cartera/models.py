@@ -53,6 +53,7 @@ class Movement:
 class MovementDAO:
     def __init__(self, file_path):
         self.path = file_path
+        self.error = []
         self.all_movements = [] #Creamos la lista como atributo porque necesitamos utilizarla fuera
         if not os.path.exists(self.path):
             f = open(file_path, "w") 
@@ -68,5 +69,11 @@ class MovementDAO:
         reader = csv.DictReader(f)
         self.all_movements = [] #Vaciamos la lista, sino cada vez que hagamos el metodo all (al refrescar la pagina), va haciendo un append con los movimientos 
         for row in reader:
-            mov = Movement(row['Date'],row['Abstract'],row['Amount'],row['Currency'])
-            self.all_movements.append(mov) #Nos crea una lista de objetos Movement
+            try:
+                mov = Movement(row['Date'],row['Abstract'],row['Amount'],row['Currency'])
+                self.all_movements.append(mov) #Nos crea una lista de objetos Movement
+            except ValueError as error:
+                mov = Movement('0001-01-01',f"FORMAT ERROR {error}",0.001,"EUR")
+                self.all_movements.append(mov)
+                self.error.append(error)
+
