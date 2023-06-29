@@ -28,11 +28,18 @@ def new_mov():
             flash(str(error)) 
             return render_template("new_mov_form.html", the_form=data, title = "Alta de movimientos") #Le ponemos la data introducida primero por el usuario
 
-@app.route("/update_movement/<int:id>", methods=["GET","POST"])
-def upd_mov(id):
+@app.route("/update_movement/<int:id>", methods=["GET", "POST"])
+def edit_mov(id):
     if request.method == "GET":
         mov = dao.get(id)
         return render_template("update.html", title="Update movement", 
-                               the_form=mov)
-    
-
+                               the_form=mov, id=id)
+    else:
+        data = request.form
+        try:
+            mv =Movement(data['date'],data['abstract'],data['amount'],data['currency'])
+            dao.update2(id, mv)
+            return redirect("/") 
+        except ValueError as error: 
+            flash(str(error)) 
+            return render_template("update.html", the_form=data, title = "Update movement") #Le ponemos la data introducida primero por el usuario

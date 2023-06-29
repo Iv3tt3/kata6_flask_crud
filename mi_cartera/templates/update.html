@@ -2,9 +2,9 @@
 
 {%block content%}
     <main>
-        <a class="button" href="/">Back to All Movements</a>=
+        <a class="button" href="/">Cancelar</a>
         <h1> Modificar movimiento </h1>
-        <form action="/new_movement" method="post">
+        <form action="/update_movement/{{id}}" method="post">
             <div>
                 <label for="fecha">Date:</label> 
                 <input type="date" name="date" id="fecha" value="{{the_form.date}}"><br><br> <!--Aqui anadimos el value que es el valor predeterminado en el caso de que pete, el valor que habia introducido el usuario:-->

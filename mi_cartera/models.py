@@ -58,7 +58,8 @@ class MovementDAO:
         if not os.path.exists(self.path):
             f = open(file_path, "w") 
             f.write("Date,Abstract,Amount,Currency\n") #Esta linea estava mal
-
+    
+    
     def insert(self, movement):
         f = open(self.path, "a", newline="")
         writer = csv.writer(f, delimiter=",", quotechar='"')
@@ -67,6 +68,7 @@ class MovementDAO:
     def all(self):
         f = open(self.path,"r") #Esta linea estava mal
         reader = csv.DictReader(f)
+
         self.all_movements = [] #Vaciamos las listas, sino cada vez que hagamos el metodo all (al refrescar la pagina), va haciendo un append
         self.error = []
         for row in reader:
@@ -90,3 +92,18 @@ class MovementDAO:
             raise IndexError("Movement don't exist")
         mov = Movement(row['Date'],row['Abstract'],row['Amount'],row['Currency'])
         return mov
+
+    
+    def update2(self, id, movement):
+        f = open(self.path,"r")
+        reader = csv.DictReader(f)
+        i = float("-inf")
+        f2 = MovementDAO("updated_movements.dat")
+        for i, row in enumerate(reader):
+            if i != id:
+                mov = Movement(row['Date'],row['Abstract'],row['Amount'],row['Currency'])
+                f2.insert(mov)
+            else:
+                f2.insert(movement)
+        os.rename("updated_movements.dat", self.path)
+        
