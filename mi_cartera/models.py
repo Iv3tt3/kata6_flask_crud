@@ -102,7 +102,7 @@ class MovementDAO:
         f.close()
         new_name = "__movemennts__new.dat"
         f = open(new_name, "w", newline="")
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=fieldnames,delimiter=",", quotechar='"') #Importante indicar aqui, porque si hay campos con comas te lo cambia
         writer.writeheader()
         writer.writerows(regs[:pos])
         writer.writerow({"Date": movement.date, "Abstract": movement.abstract, "Amount": movement.amount, "Currency": movement.currency})
@@ -110,7 +110,7 @@ class MovementDAO:
         f.close
         os.rename(new_name, self.path)
 
-
+#Provar el update2 ponniendo un abstract con coma
     
     def update2(self, id, movement):
         f = open(self.path,"r")
