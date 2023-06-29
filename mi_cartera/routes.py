@@ -1,6 +1,6 @@
 from mi_cartera import app 
 from mi_cartera.models import MovementDAO, Movement
-from flask import render_template, request, redirect, flash
+from flask import render_template, request, redirect, flash, url_for
 import csv
 
 
@@ -17,16 +17,16 @@ def index():
 @app.route("/new_movement", methods=["GET", "POST"]) 
 def new_mov():
     if request.method == 'GET':
-        return render_template("new_mov_form.html", the_form = {}, title = "Alta de movimientos") #Tengo que informarle un diccionario vacio porque sino peta debido a que hemos anadido el valor predeterminado 
+        return render_template("new_mov_form.html", the_form = {}, title = "Alta de movimientos") 
     else:
         data = request.form
         try:
             mov = Movement(data['date'],data['abstract'],data['amount'],data['currency'])
             dao.insert(mov)
-            return redirect("/") 
-        except ValueError as error: #Capturamos el mensaje de error con una variable "error"
+            return redirect(url_for("index")) #Esto permite buscar la funcion index y cambiar la ruta sin que se desconecte de otros sitios. Porque esto es parametrizable, en produccion tiene otro nombre 
+        except ValueError as error: 
             flash(str(error)) 
-            return render_template("new_mov_form.html", the_form=data, title = "Alta de movimientos") #Le ponemos la data introducida primero por el usuario
+            return render_template("new_mov_form.html", the_form=data, title = "Alta de movimientos") 
 
 @app.route("/update_movement/<int:id>", methods=["GET", "POST"])
 def edit_mov(id):
@@ -38,8 +38,8 @@ def edit_mov(id):
         data = request.form
         try:
             mv =Movement(data['date'],data['abstract'],data['amount'],data['currency'])
-            dao.update2(id, mv)
-            return redirect("/") 
+            dao.update(id, mv)
+            return redirect(url_for("index")) 
         except ValueError as error: 
             flash(str(error)) 
-            return render_template("update.html", the_form=data, title = "Update movement") #Le ponemos la data introducida primero por el usuario
+            return render_template("update.html", the_form=data, title = "Update movement") 

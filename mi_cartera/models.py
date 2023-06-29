@@ -94,6 +94,24 @@ class MovementDAO:
         return mov
 
     
+    def update(self, pos, movement):
+        f = open(self.path,"r") #Esta linea estava mal
+        reader = csv.DictReader(f, delimiter=",", quotechar='"')
+        regs = list(reader)
+        fieldnames = reader.fieldnames
+        f.close()
+        new_name = "__movemennts__new.dat"
+        f = open(new_name, "w", newline="")
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(regs[:pos])
+        writer.writerow({"Date": movement.date, "Abstract": movement.abstract, "Amount": movement.amount, "Currency": movement.currency})
+        writer.writerows(regs[pos+1:])
+        f.close
+        os.rename(new_name, self.path)
+
+
+    
     def update2(self, id, movement):
         f = open(self.path,"r")
         reader = csv.DictReader(f)
