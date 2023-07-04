@@ -15,7 +15,7 @@
                 <td>{{movement.date}}</td> <!-- Ahora esto es un atributo del objeto Movement, no es la clave date de un diccionario. Idem con el resto (abstract, amount y currency)-->
                 <td>{{movement.abstract}}</td>
                 <td>{{ "%0.2f" | format(movement.amount | float) }} {{movement.currency}}</td>
-                <td><a href="/update_movement/{{ loop.index0 }}">Edit</a></td> <!-- El loop index es una cosa de jinja. Ver docs -->
+                <td><a href="/update_movement/{{ movement.id }}">Edit</a></td> <!-- El loop index es una cosa de jinja. Ver docs -->
             </tr>
             {% endfor %}
         </table>

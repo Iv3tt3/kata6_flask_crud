@@ -5,23 +5,23 @@
         <a class="button" href="/">Cancel</a>
         <h1> Add a movement </h1>
         <form action="/new_movement" method="post">
+            {{the_form.csrf_token}} <!--Esto es un token que genera WTForms y que gracias a ello pone seguridad al formulario, no es tan hackeable-->
             <div>
-                <label for="fecha">Date:</label> 
-                <input type="date" name="date" id="fecha" value="{{the_form.date}}"><br><br> <!--Aqui anadimos el value que es el valor predeterminado en el caso de que pete, el valor que habia introducido el usuario:-->
+                {{the_form.date.label}}
+                {{the_form.date}}
+                {{the_form.date.errors}} <!--Gracias a WTForms te permite poner errores personalizados para cada campo. No lo vamos a usar aqui pero molara-->
             </div><div>
-                <label for="abstract">Name</label>
-                <input type="text" name="abstract" id="abstract" value="{{the_form.abstract}}"><br><br>
+                {{the_form.abstract.label}}
+                {{the_form.abstract}}
             </div><div>
-                <label for="amount">Amount</label>
-                <input type="number" name="amount" id="amount" step="0.01" value="{{the_form.amount}}"><br><br>
+                {{the_form.abstract.label}}
+                {{the_form.amount(step=0.01, type=number)}} <!--Lo que metas aqui dentro lo transforma en atributo html-->
             </div><div>
-                <label for="currency">Amount</label>
-                <select name="currency" name="currency" id="currency" value="{{the_form.currency}}">
-                    <option value="EUR">Euros</option>
-                    <option value="USD">Dólares</option>
+                {{the_form.currency.label}}
+                {{the_form.currency}}
                 </select><br><br>
             </div><div>
-                <input name="sumbit" id="sumbit" type="submit" value="SUBMIT">
+                {{the_form.submit}}
             </div>
         </form>
     </main>

@@ -1,12 +1,14 @@
 from datetime import date
 import csv
 import os
+import sqlite3
 
 CURRENCIES = ("EUR","USD")
 
 class Movement:
-    def __init__(self, input_date, abstract, amount, currency):
+    def __init__(self, input_date, abstract, amount, currency, id = None):
         #input_date lo cambiamos porque entrava en conflicto con la libreria date
+        self.id = id
         self.date=input_date
         self.abstract=abstract
         self.amount=amount
@@ -49,6 +51,97 @@ class Movement:
     def __repr__(self):
         return '{} {} {} {}'.format(self.date, self.abstract,  self.amount, self.currency)
     #Anadimos el metodo magico repr porque el test falla y asi vemos lo que nos esta comparando
+
+class MovemenetDAOSqlite():
+    def __init__(self, db_path):
+        self.path = db_path
+        self.error = []
+        query = """
+        CREATE TABLE IF NOT EXISTS "movements" (
+            "id"	INTEGER,
+            "Date"	TEXT NOT NULL,
+            "Abstract"	TEXT NOT NULL,
+            "Amount"	REAL NOT NULL,
+            "Currency"	TEXT NOT NULL,
+            PRIMARY KEY("id" AUTOINCREMENT)
+        );
+        """
+        #Anadimos en CREATE TABLE "IF NOT EXISTS" para que solo cree la tabla si no existe. Y si existe se pueda acceder de nuevo al objeto, sin perder los datos. podendo instanciarla varias veces.
+        
+        conn = sqlite3.connect(self.path)
+        cur = conn.cursor()
+        cur.execute(query)
+        conn.close() #Cuando cerramos la fucnion se cierra pero asi es mas evidente
+    
+    def insert(self, movement):
+        query = """
+        INSERT INTO movements
+                (date, abstract, amount, currency)
+                VALUES (?,?,?,?)
+        """
+        conn = sqlite3.connect(self.path)
+        cur = conn.cursor()
+        
+        cur.execute(query, (movement.date, movement.abstract, movement.amount, movement.currency) )
+        conn.commit()
+
+    def get(self, id):
+        query = """
+        SELECT Date, Abstract, Amount, Currency, id
+        FROM movements
+        WHERE id = ?
+        ;"""
+        #Como vemos hacemos un (SELECT Date, Abstract, Amount, Currency, id) con el orden que me da la gana para que entre en Movement con el parametro id al final
+        #Tambien funcionaria seleccionando si hacemos un (SELECT Date, Abstract, Amount, Currency) y luego en return hacemos un return Movement(*res, id)
+        conn = sqlite3.connect(self.path)
+        cur = conn.cursor()
+        cur.execute(query, (id,))
+        res = cur.fetchone()
+        conn.close()
+        if res:
+            return Movement(*res) #row es una lista, por lo que usamos args para que entren 5 parametros, no uno
+
+    def get_all(self):
+        query = """
+        SELECT Date, Abstract, Amount, Currency, id
+        FROM movements
+        ORDER by date
+        ;"""
+        conn = sqlite3.connect(self.path)
+        cur = conn.cursor()
+        cur.execute(query)
+        res = cur.fetchall()
+        #lista = [Movement(*reg) for reg in res] #List comprehension. Tambien se puede hacer con diccionarios. Es lo mismo que hacer:
+        '''
+            lista = []
+            for reg in res:
+                lista.append(Movement(*reg))
+        '''
+        lista = []
+        self.error = []
+        for reg in res:
+            try:
+                lista.append(Movement(*reg))
+            except ValueError as error:
+                mov = Movement('0001-01-01',f"FORMAT ERROR {error} in id {reg[4]}",0.001,"EUR",reg[4])
+                lista.append(mov)
+                self.error.append(error)
+        conn.close()
+        return lista
+
+    def update(self, id, movement):
+        query = """
+        UPDATE movement 
+        SET Date = ?, Abstract = ?, Amount = ?, Currency = ?
+        WHERE id = ?
+        ;"""
+
+        conn = sqlite3.connect(self.path)
+        cur = conn.cursor()
+        cur.execute(query, (movement.date, movement.abstract, movement.amount, movement.currency, id))
+        conn.commit()
+        conn.close()
+        
 
 class MovementDAO:
     def __init__(self, file_path):
