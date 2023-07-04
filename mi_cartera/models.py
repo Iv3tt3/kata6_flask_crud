@@ -101,6 +101,24 @@ class MovemenetDAOSqlite():
         if res:
             return Movement(*res) #row es una lista, por lo que usamos args para que entren 5 parametros, no uno
 
+    def get_corrupted(self, id):
+        query = """
+        SELECT Date, Abstract, Amount, Currency, id
+        FROM movements
+        WHERE id = ?
+        ;"""
+        #Como vemos hacemos un (SELECT Date, Abstract, Amount, Currency, id) con el orden que me da la gana para que entre en Movement con el parametro id al final
+        #Tambien funcionaria seleccionando si hacemos un (SELECT Date, Abstract, Amount, Currency) y luego en return hacemos un return Movement(*res, id)
+        conn = sqlite3.connect(self.path)
+        cur = conn.cursor()
+        cur.execute(query, (id,))
+        res = cur.fetchone()
+        conn.close()
+        if res:
+            return res #row es una lista, por lo que usamos args para que entren 5 parametros, no uno
+
+
+
     def get_all(self):
         query = """
         SELECT Date, Abstract, Amount, Currency, id

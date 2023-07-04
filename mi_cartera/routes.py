@@ -34,13 +34,22 @@ def new_mov():
 @app.route("/update_movement/<int:id>", methods=["GET", "POST"])
 def edit_mov(id):
     if request.method == "GET":
-        mov = dao.get(id)
-        if mov:
-            return render_template("update.html", title="Update movement", 
-                               the_form=mov, id=id)
-        else:
-            flash(f"Registro {id} inexistente")
-            return redirect(url_for("index"))
+        try:
+            mov = dao.get(id)
+            if mov:
+                return render_template("update.html", title="Update movement", 
+                                the_form=mov, id=id)
+            else:
+                flash(f"Registro {id} inexistente")
+                return redirect(url_for("index"))
+        except:
+            mov = dao.get_corrupted(id)
+            if mov:
+                return render_template("update_corrupted.html", title="Update movement", 
+                                the_form=mov, id=id)
+            else:
+                flash(f"Registro {id} inexistente")
+                return redirect(url_for("index"))
     else:
         data = request.form
         try:
