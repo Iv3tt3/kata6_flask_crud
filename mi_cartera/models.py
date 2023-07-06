@@ -149,7 +149,7 @@ class MovemenetDAOSqlite():
 
     def update(self, id, movement):
         query = """
-        UPDATE movement 
+        UPDATE movements 
         SET Date = ?, Abstract = ?, Amount = ?, Currency = ?
         WHERE id = ?
         ;"""

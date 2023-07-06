@@ -9,16 +9,35 @@
             <div>
                 {{the_form.date.label}}
                 {{the_form.date}}
-                {{the_form.date.errors}} <!--Gracias a WTForms te permite poner errores personalizados para cada campo. No lo vamos a usar aqui pero molara-->
+                {% if the_form.date.errors %} <!--Gracias a WTForms te permite poner errores personalizados para cada campo. No lo vamos a usar aqui pero molara-->
+                    {% for mensaje in the_form.date.errors %}
+                <p class="error">{{ mensaje }}</p>
+                    {% endfor %}
+                {% endif %}
             </div><div>
                 {{the_form.abstract.label}}
                 {{the_form.abstract}}
+                {% if the_form.abstract.errors %}
+                    {% for mensaje in the_form.abstract.errors %}
+                <p class="error">{{ mensaje }}</p>
+                    {% endfor %}
+                {% endif %}
             </div><div>
-                {{the_form.abstract.label}}
-                {{the_form.amount(step=0.01, type=number)}} <!--Lo que metas aqui dentro lo transforma en atributo html-->
+                {{the_form.amount.label}}
+                {{the_form.amount(step=0.01, type=number, placeholder="Introduce un importe")}} <!--Lo que metas aqui dentro lo transforma en atributo html-->
+                {% if the_form.amount.errors %}
+                    {% for mensaje in the_form.amount.errors %}
+                    <p class="error">{{mensaje}}</p>
+                    {% endfor %}
+                {% endif %}
             </div><div>
                 {{the_form.currency.label}}
                 {{the_form.currency}}
+                {% if the_form.currency.errors %}
+                    {% for mennsaje in the_form.curency.errors %}
+                    <p class="error">{{mensaje}}</p>
+                    {% endfor %}
+                {% endif %}
                 </select><br><br>
             </div><div>
                 {{the_form.submit}}

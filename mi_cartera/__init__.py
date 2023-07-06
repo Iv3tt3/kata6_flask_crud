@@ -1,4 +1,4 @@
 from flask import Flask
 
 app = Flask(__name__)
-app.secret_key = "0F5wjAC5qo0qCTBSnXHxx66PpzZhmZ7Q"
+app.config.from_prefixed_env() #Le digo que me coja la config del prefixed env. Y lo prefijamos
